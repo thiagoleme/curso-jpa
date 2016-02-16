@@ -1,17 +1,18 @@
 package br.com.caelum.financas.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "SEQ_CONTAS", sequenceName = "SEQ_CONTAS", initialValue = 1)
 public class Conta {
-
 	private String agencia;
 	private String banco;
 	@Id
@@ -20,6 +21,12 @@ public class Conta {
 	private String numero;
 	private BigDecimal saldo;
 	private String titular;
+	@OneToMany(mappedBy = "conta")
+	private List<Movimentacao> movimentacoes;
+
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
 
 	public String getAgencia() {
 		return agencia;
@@ -63,6 +70,10 @@ public class Conta {
 
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
+	}
+
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
 	}
 
 	public void setTitular(String titular) {
